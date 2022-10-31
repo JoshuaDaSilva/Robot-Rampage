@@ -21,8 +21,7 @@ public class Gun : MonoBehaviour
     {
     }
     protected void Fire()
-    {
-      
+    { 
         if (ammo.HasAmmo(tag))
         {   
             GetComponent<AudioSource>().PlayOneShot(liveFire);
