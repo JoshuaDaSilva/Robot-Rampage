@@ -5,6 +5,13 @@ using UnityEngine;
 public class Robot : MonoBehaviour
 {
     [SerializeField]
+    private AudioClip deathSound;
+    [SerializeField]
+    private AudioClip fireSound;
+    [SerializeField]
+    private AudioClip weakHitSound;
+
+    [SerializeField]
     private string robotType;
     public int health;
     public int range;
@@ -19,6 +26,42 @@ public class Robot : MonoBehaviour
 
     [SerializeField]
     GameObject missileprefab;
+
+    private void fire()
+    {
+        GameObject missile = Instantiate(missileprefab);
+        missile.transform.position = missileFireSpot.transform.position;
+        missile.transform.rotation = missileFireSpot.transform.rotation;
+        robot.Play("Fire");
+        GetComponent<AudioSource>().PlayOneShot(fireSound);
+    }
+
+    // 1
+    public void TakeDamage(int amount)
+    {
+        if (isDead)
+        {
+            return;
+        }
+        health -= amount;
+        if (health <= 0)
+        {
+            isDead = true;
+            robot.Play("Die");
+            StartCoroutine("DestroyRobot");
+            GetComponent<AudioSource>().PlayOneShot(deathSound);
+        }
+        else
+        {
+            GetComponent<AudioSource>().PlayOneShot(weakHitSound);
+        }
+    }
+    // 2
+    IEnumerator DestroyRobot()
+    {
+        yield return new WaitForSeconds(1.5f);
+        Destroy(gameObject);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -50,33 +93,5 @@ public class Robot : MonoBehaviour
             fire();
         }
     }
-    private void fire()
-    {
-        GameObject missile = Instantiate(missileprefab);
-        missile.transform.position = missileFireSpot.transform.position;
-        missile.transform.rotation = missileFireSpot.transform.rotation;
-        robot.Play("Fire");
-    }
-
-    // 1
-    public void TakeDamage(int amount)
-    {
-        if (isDead)
-        {
-            return;
-        }
-        health -= amount;
-        if (health <= 0)
-        {
-            isDead = true;
-            robot.Play("Die");
-            StartCoroutine("DestroyRobot");
-        }
-    }
-    // 2
-    IEnumerator DestroyRobot()
-    {
-        yield return new WaitForSeconds(1.5f);
-        Destroy(gameObject);
-    }
+ 
 }
