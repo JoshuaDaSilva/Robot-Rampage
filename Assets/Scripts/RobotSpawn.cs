@@ -8,15 +8,7 @@ public class RobotSpawn : MonoBehaviour
     GameObject[] robots;
     private int timesSpawned;
     private int healthBonus = 0;
-    public void SpawnRobot()
-    {
-        timesSpawned++;
-        healthBonus += 1 * timesSpawned;
-        GameObject robot = Instantiate(robots[Random.Range(0, robots.Length)]);
-        robot.transform.position = transform.position;
-        robot.GetComponent<Robot>().health += healthBonus;
-    }
-
+ 
     // Start is called before the first frame update
     void Start()
     {
@@ -27,5 +19,13 @@ public class RobotSpawn : MonoBehaviour
     void Update()
     {
         
+    }
+    public void SpawnRobot()
+    {
+        timesSpawned++;
+        healthBonus += 1 * timesSpawned;
+        GameObject robot = Instantiate(robots[Random.Range(0, robots.Length)]);
+        robot.transform.position = transform.position;
+        robot.GetComponent<Robot>().health += healthBonus;
     }
 }

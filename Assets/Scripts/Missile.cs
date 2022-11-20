@@ -7,6 +7,7 @@ public class Missile : MonoBehaviour
     public float speed = 30f;
     public int damage = 10;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,8 +27,7 @@ public class Missile : MonoBehaviour
 
     void OnCollisionEnter(Collision collider)
     {
-        if (collider.gameObject.GetComponent<Player>() != null
-        && collider.gameObject.tag == "Player")
+        if (collider.gameObject.GetComponent<Player>() != null && collider.gameObject.tag == "Player")
         {
             collider.gameObject.GetComponent<Player>().TakeDamage(damage);
         }

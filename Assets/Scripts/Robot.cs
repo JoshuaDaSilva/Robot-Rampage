@@ -5,14 +5,10 @@ using UnityEngine;
 public class Robot : MonoBehaviour
 {
     [SerializeField]
-    private AudioClip deathSound;
-    [SerializeField]
-    private AudioClip fireSound;
-    [SerializeField]
-    private AudioClip weakHitSound;
-
+    GameObject missileprefab;
     [SerializeField]
     private string robotType;
+
     public int health;
     public int range;
     public float fireRate;
@@ -25,8 +21,42 @@ public class Robot : MonoBehaviour
     public Animator robot;
 
     [SerializeField]
-    GameObject missileprefab;
+    private AudioClip deathSound;
+    [SerializeField]
+    private AudioClip fireSound;
+    [SerializeField]
+    private AudioClip weakHitSound;
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        // 1
+        isDead = false;
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // 2
+        if (isDead)
+        {
+            return;
+        }
+        // 3
+        transform.LookAt(player);
+        // 4
+        agent.SetDestination(player.position);
+        // 5
+        if (Vector3.Distance(transform.position, player.position) < range
+        && Time.time - timeLastFired > fireRate)
+        {
+            // 6
+            timeLastFired = Time.time;
+            fire();
+        }
+    }
     private void fire()
     {
         GameObject missile = Instantiate(missileprefab);
@@ -64,35 +94,5 @@ public class Robot : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // 1
-        isDead = false;
-        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // 2
-        if (isDead)
-        {
-        return;
-        }
-        // 3
-        transform.LookAt(player);
-        // 4
-        agent.SetDestination(player.position);
-        // 5
-        if (Vector3.Distance(transform.position, player.position) < range
-        && Time.time - timeLastFired > fireRate)
-        {
-            // 6
-            timeLastFired = Time.time;
-            fire();
-        }
-    }
- 
 }

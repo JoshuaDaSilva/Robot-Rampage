@@ -20,41 +20,6 @@ public class Game : MonoBehaviour
     public int enemiesLeft;
 
     // 1
-    public void OnGUI()
-    {
-        if (isGameOver && Cursor.visible == false)
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-    }
-    // 2
-    public void GameOver()
-    {
-        isGameOver = true;
-        Time.timeScale = 0;
-        player.GetComponent<FirstPersonController>().enabled = false;
-        player.GetComponent<CharacterController>().enabled = false;
-        gameOverPanel.SetActive(true);
-    }
-    // 3
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(Constants.SceneBattle);
-        gameOverPanel.SetActive(true);
-    }
-    // 4
-    public void Exit()
-    {
-        Application.Quit();
-    }
-    // 5
-    public void MainMenu()
-    {
-        SceneManager.LoadScene(Constants.SceneMenu);
-    }
-
-    // 1
     void Start()
     {
         singleton = this;
@@ -116,5 +81,45 @@ public class Game : MonoBehaviour
             score += 1;
             gameUI.SetScoreText(score);
         }
+    }
+
+    // 1
+    public void OnGUI()
+    {
+        if (isGameOver && Cursor.visible == false)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
+    // 2
+    public void GameOver()
+    {
+        isGameOver = true;
+        Time.timeScale = 0;
+        player.GetComponent<FirstPersonController>().enabled = false;
+        player.GetComponent<CharacterController>().enabled = false;
+        gameOverPanel.SetActive(true);
+    }
+    // 3
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(Constants.SceneBattle);
+        gameOverPanel.SetActive(true);
+    }
+    // 4
+    public void Exit()
+    {
+        Application.Quit();
+    }
+    // 5
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(Constants.SceneMenu);
+    }
+
+    void Update()
+    {
+       
     }
 }

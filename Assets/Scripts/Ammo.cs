@@ -12,6 +12,9 @@ public class Ammo : MonoBehaviour
     private int shotgunAmmo = 10;
     [SerializeField]
     private int assaultRifleAmmo = 50;
+    [SerializeField]
+    private int sniperAmmo = 5;
+
     public Dictionary<string, int> tagToAmmo;
 
     void Awake()
@@ -21,6 +24,7 @@ public class Ammo : MonoBehaviour
             { Constants.Pistol , pistolAmmo },
             { Constants.Shotgun , shotgunAmmo },
             { Constants.AssaultRifle , assaultRifleAmmo },
+            { Constants.Sniper , sniperAmmo },
         };
     }
     public void AddAmmo(string tag, int ammo)
@@ -58,12 +62,6 @@ public class Ammo : MonoBehaviour
         }
         tagToAmmo[tag]--;
         gameUI.SetAmmoText(tagToAmmo[tag]);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame

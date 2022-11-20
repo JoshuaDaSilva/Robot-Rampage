@@ -13,6 +13,13 @@ public class Player : MonoBehaviour
     private GunEquipper gunEquipper;
     private Ammo ammo;
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        ammo = GetComponent<Ammo>();
+        gunEquipper = GetComponent<GunEquipper>();
+    }
+
     public void TakeDamage(int amount)
     {
         int healthDamage = amount;
@@ -20,6 +27,7 @@ public class Player : MonoBehaviour
         {
             int effectiveArmor = armor * 2;
             effectiveArmor -= healthDamage;
+            
             // If there is still armor, don't need to process
             // health damage
             if (effectiveArmor > 0)
@@ -34,6 +42,7 @@ public class Player : MonoBehaviour
         }
         health -= healthDamage;
         gameUI.SetHealthText(health);
+
         if (health <= 0)
         {
             GetComponent<AudioSource>().PlayOneShot(playerDead);
@@ -86,6 +95,15 @@ public class Player : MonoBehaviour
             gameUI.SetAmmoText(ammo.GetAmmo(Constants.Shotgun));
         }
     }
+    private void pickupSniperAmmo()
+    {
+        ammo.AddAmmo(Constants.Sniper, 5);
+        gameUI.SetPickUpText("Sniper ammo picked up + 5 ammo");
+        if (gunEquipper.GetActiveWeapon().tag == Constants.Shotgun)
+        {
+            gameUI.SetAmmoText(ammo.GetAmmo(Constants.Shotgun));
+        }
+    }
 
     public void PickUpItem(int pickupType)
     {
@@ -106,22 +124,12 @@ public class Player : MonoBehaviour
             case Constants.PickUpShotgunAmmo:
                 pickupShotgunAmmo();
                 break;
+            case Constants.PickUpSniperAmmo:
+                pickupSniperAmmo();
+                break;
             default:
                 Debug.LogError("Bad pickup type passed" + pickupType);
                 break;
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        ammo = GetComponent<Ammo>();
-        gunEquipper = GetComponent<GunEquipper>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

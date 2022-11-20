@@ -5,16 +5,6 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
     public int type;
-    void OnTriggerEnter(Collider collider)
-    {
-        if (collider.gameObject.GetComponent<Player>() != null
-        && collider.gameObject.tag == "Player")
-        {
-            collider.gameObject.GetComponent<Player>().PickUpItem(type);
-            GetComponentInParent<PickupSpawn>().PickupWasPickedUp();
-            Destroy(gameObject);
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -26,5 +16,15 @@ public class Pickup : MonoBehaviour
     void Update()
     {
         
+    }
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.GetComponent<Player>() != null
+        && collider.gameObject.tag == "Player")
+        {
+            collider.gameObject.GetComponent<Player>().PickUpItem(type);
+            GetComponentInParent<PickupSpawn>().PickupWasPickedUp();
+            Destroy(gameObject);
+        }
     }
 }

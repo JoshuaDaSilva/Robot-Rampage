@@ -7,12 +7,17 @@ public class PickupSpawn : MonoBehaviour
     [SerializeField]
     private GameObject[] pickups;
 
+    void Update()
+    {
+        
+    }
+
     // 1
     void spawnPickup()
     {
         // Instantiate a random pickup
         GameObject pickup = Instantiate(pickups[Random.Range(0,
-       pickups.Length)]);
+        pickups.Length)]);
         pickup.transform.position = transform.position;
         pickup.transform.parent = transform;
     }
@@ -22,6 +27,7 @@ public class PickupSpawn : MonoBehaviour
         yield return new WaitForSeconds(20);
         spawnPickup();
     }
+
     // 3
     void Start()
     {

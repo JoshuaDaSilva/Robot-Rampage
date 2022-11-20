@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class GunEquipper : MonoBehaviour
 {
-    [SerializeField]
-    GameUI gameUI;
-
     public static string activeWeaponType;
     public GameObject pistol;
     public GameObject assaultRifle;
     public GameObject shotgun;
+    public GameObject sniper;
     GameObject activeGun;
 
+    [SerializeField]
+    GameUI gameUI;
     [SerializeField]
     Ammo ammo;
 
@@ -22,19 +22,10 @@ public class GunEquipper : MonoBehaviour
         activeWeaponType = Constants.Pistol;
         activeGun = pistol;
     }
-    private void loadWeapon(GameObject weapon)
-    {
-        pistol.SetActive(false);
-        assaultRifle.SetActive(false);
-        shotgun.SetActive(false);
-        weapon.SetActive(true);
-        activeGun = weapon;
-        gameUI.SetAmmoText(ammo.GetAmmo(activeGun.tag));
-    }
 
     // Update is called once per frame
     void Update()
-     {
+    {
         if (Input.GetKeyDown("1"))
         {
             loadWeapon(pistol);
@@ -53,8 +44,23 @@ public class GunEquipper : MonoBehaviour
             activeWeaponType = Constants.Shotgun;
             gameUI.UpdateReticle();
         }
+        else if (Input.GetKeyDown("4"))
+        {
+            loadWeapon(sniper);
+            activeWeaponType = Constants.Sniper;
+            gameUI.UpdateReticle();
+        }
     }
-
+    private void loadWeapon(GameObject weapon)
+    {
+        pistol.SetActive(false);
+        assaultRifle.SetActive(false);
+        shotgun.SetActive(false);
+        sniper.SetActive(false);
+        weapon.SetActive(true);
+        activeGun = weapon;
+        gameUI.SetAmmoText(ammo.GetAmmo(activeGun.tag));
+    }
     public GameObject GetActiveWeapon()
     {
         return activeGun;

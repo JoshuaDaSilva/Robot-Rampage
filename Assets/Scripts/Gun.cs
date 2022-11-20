@@ -46,7 +46,7 @@ public class Gun : MonoBehaviour
         }
         else
         {
-        GetComponent<AudioSource>().PlayOneShot(dryFire);
+            GetComponent<AudioSource>().PlayOneShot(dryFire);
         }
         GetComponentInChildren<Animator>().Play("Fire");
 
